@@ -1,13 +1,17 @@
 package com.clonexy700.bedwars.listener;
 
 import com.clonexy700.bedwars.Main;
+import com.clonexy700.bedwars.utils.GameManager;
+import com.clonexy700.bedwars.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
 
@@ -33,6 +37,26 @@ public class InteractListener implements Listener {
                     size = 27;
                 }
                 Inventory inv = Bukkit.createInventory(null, size, "§6Choose your team");
+
+                for (String s: teams) {
+                    try {
+                        byte subid = 5;
+                        if (GameManager.getTeamPlayers(s).size() == main.getConfig().getInt("")) {
+                            subid = 14;
+                        }
+                        ItemBuilder itemBuilder = new ItemBuilder(new ItemStack(Material.WOOL, 1, subid))
+                                .name(s);
+                        itemBuilder.lore("");
+                        for (Player p : GameManager.getTeamPlayers(s)) {
+                            itemBuilder.lore(p.getName());
+                        }
+                        inv.setItem(Integer.parseInt(s), itemBuilder.build());
+                    } catch (NullPointerException e1) {
+                        e.getPlayer().sendMessage(main.prefix + "§cError happened! §7[Code: #1]");
+                    }
+                }
+
+                e.getPlayer().openInventory(inv);
             }
         }
     }

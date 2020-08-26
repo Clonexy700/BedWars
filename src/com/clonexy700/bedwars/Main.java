@@ -28,6 +28,7 @@ public class Main extends JavaPlugin {
         new BuildListener(this);
         new EntityDamageListener(this);
         new FoodLevelChangeListener(this);
+        new InteractListener(this);
         new JoinListener(this);
         new WeatherChangeListener(this);
     }
