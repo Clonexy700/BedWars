@@ -39,6 +39,15 @@ public class BedWarsCommand implements CommandExecutor {
                 p.sendMessage(main.prefix + "§cNumber is required");
             }
 
+        }else if (args.length == 2 && args[0].equalsIgnoreCase("setteam")) {
+            try {
+                main.getConfig().set("location.teamsize", Integer.parseInt(args[1]));
+                main.saveConfig();
+                p.sendMessage(main.prefix + "§d Team size §8" + args[1] + "§dhave been set up!");
+            } catch (NumberFormatException e) {
+                p.sendMessage(main.prefix + "§cNumber is required");
+            }
+
         } else {
             showHelp(p);
         }
@@ -50,6 +59,8 @@ public class BedWarsCommand implements CommandExecutor {
         p.sendMessage(main.prefix + "§7/bw setspawn $8 - §aSet the next spawn");
         p.sendMessage(main.prefix + "§7/bw setspawn $8 - §aSet the spawn point");
         p.sendMessage(main.prefix + "§7/bw setspec $8 - §aSet the spectator spawn");
+        p.sendMessage(main.prefix + "§7/bw setteam [Amount] $8 - §aSet the team size");
+        p.sendMessage("");
 
     }
 }
