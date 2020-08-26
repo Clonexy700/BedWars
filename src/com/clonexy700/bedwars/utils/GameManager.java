@@ -1,5 +1,6 @@
 package com.clonexy700.bedwars.utils;
 
+import com.clonexy700.bedwars.Main;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class GameManager {
         }
         list.add(p);
         playersinTeam.put(team, list);
+
+        Main.getPlugin(Main.class).scoreboardUtil.setTeam(p.getName(), team);
     }
     public static List<Player> getTeamPlayers(String team) {
         return playersinTeam.get(team);

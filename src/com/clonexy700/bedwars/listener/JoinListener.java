@@ -39,6 +39,8 @@ public class JoinListener implements Listener {
 
                 LobbyCountdown.start(false);
 
+                main.scoreboardUtil.setTeam(e.getPlayer().getName(), "001default");
+
                 e.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.BED).name("§6Team choose").build());
                 e.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.NETHER_STAR).name("§6Statistics").build());
 
