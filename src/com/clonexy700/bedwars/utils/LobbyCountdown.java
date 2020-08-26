@@ -10,6 +10,9 @@ public class LobbyCountdown {
     static int sched;
 
     public static void start(boolean force) {
+        if (GameState.getGameState() != GameState.LOBBY) {
+            return;
+        }
         if (force || Bukkit.getOnlinePlayers().size() == 2) {
             if (!isStarted) {
                 if (force) {
@@ -20,7 +23,7 @@ public class LobbyCountdown {
                     public void run() {
                         Bukkit.getOnlinePlayers().forEach(p -> p.setLevel(count));
 
-                        if (count==60 || count == 45 || count == 30 || count == 15 || count <= 5){
+                        if (count==60 || count == 45 || count == 30 || count == 15 || count <= 5 && count != 0){
                             Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(Main.getPlugin(Main.class).prefix
                             + "§dGame starts in $8" + count + "seconds§d!"));
 
