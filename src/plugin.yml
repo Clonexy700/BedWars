@@ -1,0 +1,8 @@
+main: com.clonexy700.bedwars.Main
+version: 1.0.0
+author: Clonexy700
+name: BedWars
+commands:
+  bedwars:
+    aliases: [bw, game]
+    usage: /bedwars
