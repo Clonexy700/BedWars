@@ -47,8 +47,12 @@ public class InteractListener implements Listener {
                         ItemBuilder itemBuilder = new ItemBuilder(new ItemStack(Material.WOOL, 1, subid))
                                 .name(s);
                         itemBuilder.lore("");
-                        for (Player p : GameManager.getTeamPlayers(s)) {
-                            itemBuilder.lore(p.getName());
+                        for (int i = 0; i < main.getConfig().getInt("location.teamsize"); i++) {
+                            try {
+                                itemBuilder.lore("§a" + GameManager.playersinTeam.get(s).get(i).getName());
+                            } catch (Exception e1) {
+                                itemBuilder.lore("§Empty");
+                            }
                         }
                         inv.setItem(Integer.parseInt(s), itemBuilder.build());
                     } catch (NullPointerException e1) {
