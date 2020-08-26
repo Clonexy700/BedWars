@@ -1,7 +1,7 @@
-package com.clonexy.bedwars.listener;
+package com.clonexy700.bedwars.listener;
 
-import com.clonexy.bedwars.Main;
-import com.clonexy.bedwars.utils.LobbyCountdown;
+import com.clonexy700.bedwars.Main;
+import com.clonexy700.bedwars.utils.LobbyCountdown;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

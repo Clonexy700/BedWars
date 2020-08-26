@@ -1,8 +1,8 @@
-package com.clonexy.bedwars.commands;
+package com.clonexy700.bedwars.commands;
 
-import com.clonexy.bedwars.Main;
+import com.clonexy700.bedwars.Main;
 import org.bukkit.Bukkit;
-import com.clonexy.bedwars.utils.setSpawn;
+import com.clonexy700.bedwars.utils.setSpawn;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -1,6 +1,6 @@
-package com.clonexy.bedwars.utils;
+package com.clonexy700.bedwars.utils;
 
-import com.clonexy.bedwars.Main;
+import com.clonexy700.bedwars.Main;
 import org.bukkit.Location;
 
 public class setSpawn {

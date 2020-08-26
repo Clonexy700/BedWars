@@ -1,6 +1,6 @@
-package com.clonexy.bedwars;
+package com.clonexy700.bedwars;
 
-import com.clonexy.bedwars.commands.BedWarsCommand;
+import com.clonexy700.bedwars.commands.BedWarsCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {

@@ -1,4 +1,4 @@
-package com.clonexy.bedwars.utils;
+package com.clonexy700.bedwars.utils;
 
 public class GameManager {
     public static void start() {
