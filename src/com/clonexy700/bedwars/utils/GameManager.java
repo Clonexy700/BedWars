@@ -16,6 +16,11 @@ public class GameManager {
 
     public static void setPlayerTeam(Player p, String team) {
         List<Player> list = new ArrayList<>();
+        for (String s: playersinTeam.keySet()) {
+            if (playersinTeam.get(s).contains(p)) {
+                playersinTeam.remove(p);
+            }
+        }
         if (playersinTeam.containsKey(team)) {
             list = playersinTeam.get(team);
         }
