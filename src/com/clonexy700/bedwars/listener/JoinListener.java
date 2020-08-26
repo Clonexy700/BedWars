@@ -25,6 +25,7 @@ public class JoinListener implements Listener {
         if (GameState.getGameState() == GameState.LOBBY) {
             e.setJoinMessage(main.prefix + "§d" + e.getPlayer().getName() + "§7Joined to the game");
             try {
+                e.getPlayer().teleport((Location) main.getConfig().get("location.lobby"));
                 e.getPlayer().setGameMode(GameMode.SURVIVAL);
                 e.getPlayer().getInventory().clear();
                 e.getPlayer().getInventory().getArmorContents();
@@ -35,7 +36,6 @@ public class JoinListener implements Listener {
                 e.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                 e.getPlayer().setAllowFlight(false);
                 e.getPlayer().setLevel(0);
-                e.getPlayer().teleport((Location) main.getConfig().get("location.lobby"));
 
                 LobbyCountdown.start(false);
 

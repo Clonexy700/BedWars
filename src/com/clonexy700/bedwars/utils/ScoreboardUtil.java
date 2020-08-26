@@ -16,8 +16,8 @@ import java.util.List;
 // What is ahegao? Is what a type of cheese?
 public class ScoreboardUtil {
     private Main main;
-    private Scoreboard scoreboard;
-    private HashMap<String, Team> teams = new HashMap<>();
+    public Scoreboard scoreboard;
+    public HashMap<String, Team> teams = new HashMap<>();
 
     public ScoreboardUtil(Main main) {
         this.main = main;
