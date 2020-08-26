@@ -29,7 +29,7 @@ public class ScoreboardUtil {
         Objective objective = scoreboard.registerNewObjective("dummy", "teams");
         for (String teamnumber: main.getConfig().getConfigurationSection("location.spawn").getKeys(false)) {
             Team team = scoreboard.registerNewTeam("00000" + teamnumber);
-            team.setPrefix("bTeam #"+ teamnumber + " | ");
+            team.setPrefix("§bTeam #"+ teamnumber + " | ");
             team.setAllowFriendlyFire(false);
             teams.put(teamnumber, team);
         }
