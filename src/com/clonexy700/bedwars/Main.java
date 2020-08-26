@@ -1,10 +1,7 @@
 package com.clonexy700.bedwars;
 
 import com.clonexy700.bedwars.commands.BedWarsCommand;
-import com.clonexy700.bedwars.listener.EntityDamageListener;
-import com.clonexy700.bedwars.listener.FoodLevelChangeListener;
-import com.clonexy700.bedwars.listener.JoinListener;
-import com.clonexy700.bedwars.listener.WeatherChangeListener;
+import com.clonexy700.bedwars.listener.*;
 import com.clonexy700.bedwars.utils.GameState;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,6 +25,7 @@ public class Main extends JavaPlugin {
         new BedWarsCommand(this);
     }
     public void initListener() {
+        new BuildListener(this);
         new EntityDamageListener(this);
         new FoodLevelChangeListener(this);
         new JoinListener(this);
