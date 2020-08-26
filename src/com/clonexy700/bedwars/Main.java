@@ -36,6 +36,7 @@ public class Main extends JavaPlugin {
         new InteractListener(this);
         new InventoryClickListener(this);
         new JoinListener(this);
+        new PlayerItemDropListener(this);
         new WeatherChangeListener(this);
     }
 }

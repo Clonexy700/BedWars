@@ -27,13 +27,13 @@ public class ScoreboardUtil {
     public void generate() {
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective objective = scoreboard.registerNewObjective("dummy", "teams");
-        scoreboard.registerNewTeam("001default").setPrefix("§7");
+        scoreboard.registerNewTeam("001default").setPrefix("§8");
         for (String teamnumber: main.getConfig().getConfigurationSection("location.spawn").getKeys(false)) {
             Team team = scoreboard.registerNewTeam("00000" + teamnumber);
             team.setPrefix("§bTeam #0"+ teamnumber + " | ");
             team.setAllowFriendlyFire(false);
             teams.put(teamnumber, team);
-            GameManager.playersinTeam.put(teamnumber, new ArrayList<Player>());
+            GameManager.playersinTeam.put(teamnumber, new ArrayList<>());
         }
     }
 

@@ -23,11 +23,17 @@ public class InventoryClickListener implements Listener {
             if (e.getClickedInventory().getName().equals("§6Choose your team")) {
                 if (e.getCurrentItem() != null) {
                     String team = e.getCurrentItem().getItemMeta().getDisplayName().substring(9);
-                    if (GameManager.getTeamPlayers(team).contains(e.getWhoClicked())) {
-                        GameManager.setPlayerTeam((Player) e.getWhoClicked(), team);
+                    if (!GameManager.getTeamPlayers(team).contains(e.getWhoClicked())) {
+                        if (GameManager.getTeamPlayers(team).size() >= main.getConfig().getInt("location.teamsize")) {
+                            e.getWhoClicked().closeInventory();
+                            return;
+                        }
+                        GameManager.setPlayerTeam((Player) e.getWhoClicked(), "00000" + team);
+                        e.getWhoClicked().closeInventory();
+                        e.getWhoClicked().sendMessage(main.prefix + "You are in §bTeam #0" + team);
+                    } else {
+                        e.getWhoClicked().sendMessage(main.prefix + "§cYou are already in this team!");
                     }
-                    e.getWhoClicked().closeInventory();
-                    e.getWhoClicked().sendMessage(main.prefix + "You are in §bTeam #0" + team);
                 }
                 e.setCancelled(true);
             }
