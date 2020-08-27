@@ -1,8 +1,11 @@
 package com.clonexy700.bedwars.commands;
 
 import com.clonexy700.bedwars.Main;
+import com.clonexy700.bedwars.utils.ItemSpawner;
 import org.bukkit.Bukkit;
 import com.clonexy700.bedwars.utils.setSpawn;
+import org.bukkit.ChatColor;
+import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -47,10 +50,35 @@ public class BedWarsCommand implements CommandExecutor {
             } catch (NumberFormatException e) {
                 p.sendMessage(main.prefix + "§cNumber is required");
             }
-
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("setcolor")) {
+            try {
+                main.getConfig().set("location.spawn" + Integer.parseInt(args[1]) + ".color",
+                        ChatColor.valueOf(args[2].toUpperCase()).name().toUpperCase());
+                main.saveConfig();
+                p.sendMessage(main.prefix + "The team" + ChatColor.valueOf(args[2].toUpperCase())
+                + ChatColor.valueOf(args[2].toUpperCase()).name() + "have been set up!");
+                main.scoreboardUtil.generate();
+            } catch (NumberFormatException e) {
+                p.sendMessage(main.prefix + "§cNumber is required");
+            } catch (EnumConstantNotPresentException e) {
+                p.sendMessage(main.prefix + "§cThis color could not be found");
+            }
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("tp")) {
+            Bukkit.getServer().createWorld(new WorldCreator(args[1]).generateStructures(false));
+            Bukkit.getServer().getWorlds().add(Bukkit.getWorld(args[1]));
+            p.teleport(Bukkit.getWorld(args[1]).getSpawnLocation());
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("addspawner")) {
+            try {
+                ItemSpawner itemSpawner = new ItemSpawner(p.getLocation(), ItemSpawner.Type.valueOf(args[1]));
+                itemSpawner.save();
+                p.sendMessage(main.prefix + "§aYou added a spawner!");
+            } catch (Exception e) {
+                p.sendMessage(main.prefix + "§cUse one of the following types: §8[BRONZE, IRON, GOLD]");
+            }
         } else {
             showHelp(p);
         }
+
         return true;
     }
     public void showHelp(Player p) {

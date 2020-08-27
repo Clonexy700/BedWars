@@ -18,7 +18,7 @@ public class LobbyCountdown {
                 if (force) {
                     count = 5;
                 }
-                Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(Main.class), new Runnable() {
+                sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(Main.class), new Runnable() {
                     @Override
                     public void run() {
                         Bukkit.getOnlinePlayers().forEach(p -> p.setLevel(count));
@@ -28,10 +28,10 @@ public class LobbyCountdown {
                             + "§dGame starts in $8" + count + "seconds§d!"));
 
                         } else if (count==0) {
+                            Bukkit.getScheduler().cancelTask(sched);
                             Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(Main.getPlugin(Main.class).prefix
                                     + "§dGame started!"));
                             GameManager.start();
-                            Bukkit.getScheduler().cancelTask(sched);
                             return;
                         }
                         count--;

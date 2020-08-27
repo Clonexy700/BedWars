@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -20,33 +21,38 @@ public class JoinListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, main);
     }
 
+    public static void join(Main main, Player p) {
+        main.statsManager.setupPlayer(p, getUniqueId().toString());
+        try {
+            p.getPlayer().teleport((Location) main.getConfig().get("location.lobby"));
+            p.getPlayer().setGameMode(GameMode.SURVIVAL);
+            p.getPlayer().getInventory().clear();
+            p.getPlayer().getInventory().getArmorContents();
+            p.getPlayer().updateInventory();
+            p.getPlayer().setExp(0);
+            p.getPlayer().setFoodLevel(20);
+            p.getPlayer().setHealth(20);
+            p.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+            p.getPlayer().setAllowFlight(false);
+            p.getPlayer().setLevel(0);
+
+            LobbyCountdown.start(false);
+
+            main.scoreboardUtil.setTeam(e.getPlayer().getName(), "001default");
+
+            p.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.BED).name("§6Team choose").build());
+            p.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.NETHER_STAR).name("§6Statistics").build());
+
+        } catch (NullPointerException e1) {
+            p.getPlayer().sendMessage(main.prefix + "§cThe BedWars plugin is not yet fully set up");
+        }
+    }
+
     @EventHandler
     public void  onJoin(PlayerJoinEvent e) {
         if (GameState.getGameState() == GameState.LOBBY) {
             e.setJoinMessage(main.prefix + "§d" + e.getPlayer().getName() + "§7Joined to the game");
-            try {
-                e.getPlayer().teleport((Location) main.getConfig().get("location.lobby"));
-                e.getPlayer().setGameMode(GameMode.SURVIVAL);
-                e.getPlayer().getInventory().clear();
-                e.getPlayer().getInventory().getArmorContents();
-                e.getPlayer().updateInventory();
-                e.getPlayer().setExp(0);
-                e.getPlayer().setFoodLevel(20);
-                e.getPlayer().setHealth(20);
-                e.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-                e.getPlayer().setAllowFlight(false);
-                e.getPlayer().setLevel(0);
-
-                LobbyCountdown.start(false);
-
-                main.scoreboardUtil.setTeam(e.getPlayer().getName(), "001default");
-
-                e.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.BED).name("§6Team choose").build());
-                e.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.NETHER_STAR).name("§6Statistics").build());
-
-            } catch (NullPointerException e1) {
-                e.getPlayer().sendMessage(main.prefix + "§cThe BedWars plugin is not yet fully set up");
-            }
+            join(main, e.getPlayer());
         }
     }
 }

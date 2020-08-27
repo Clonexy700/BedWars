@@ -47,7 +47,7 @@ public class InteractListener implements Listener {
                                 subid = 14;
                             }
                             ItemBuilder itemBuilder = new ItemBuilder(new ItemStack(Material.WOOL, 1, subid))
-                                    .name("§bTeam #0" + s);
+                                    .name(main.scoreboardUtil.scoreboard.getTeam("00000" + s).getSuffix() + "Team#0" + s);
                             itemBuilder.lore("");
                             for (int i = 0; i < main.getConfig().getInt("location.teamsize"); i++) {
                                 try {
