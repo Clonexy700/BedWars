@@ -3,6 +3,7 @@ package com.clonexy700.bedwars.utils;
 import com.clonexy700.bedwars.merchant.Merchant;
 import com.clonexy700.bedwars.merchant.MerchantOffer;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -13,9 +14,9 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Villager {
+public class VillagerGUI {
 
-    public Villager() {
+    public VillagerGUI() {
 
     }
 
@@ -80,14 +81,14 @@ public class Villager {
     }
 
     public void openArmor(Player p) {
-        ChatColor color = plugin.getTeam(p).getColor();
+        Color color = Color.WHITE;
         Merchant m = new Merchant();
         m.setTitle("Armor");
-        MerchantOffer leatherHelmet = new MerchantOffer(bronze(1), getArmor(Material.LEATHER_HELMET), color);
+        MerchantOffer leatherHelmet = new MerchantOffer(bronze(1), getArmor(Material.LEATHER_HELMET, color));
         m.addOffer(leatherHelmet);
-        MerchantOffer leatherLeggings = new MerchantOffer(bronze(1), getArmor(Material.LEATHER_LEGGINGS), color);
+        MerchantOffer leatherLeggings = new MerchantOffer(bronze(1), getArmor(Material.LEATHER_LEGGINGS, color));
         m.addOffer(leatherLeggings);
-        MerchantOffer leatherBoots = new MerchantOffer(bronze(1), getArmor(Material.LEATHER_BOOTS), color);
+        MerchantOffer leatherBoots = new MerchantOffer(bronze(1), getArmor(Material.LEATHER_BOOTS, color));
         m.addOffer(leatherBoots);
         MerchantOffer offer5 = new MerchantOffer(iron(1), ChainmailLVL1());
         m.addOffer(offer5);
@@ -159,10 +160,10 @@ public class Villager {
         m.openTrading(p);
     }
 
-    private ItemStack getArmor(Material type, ChatColor color) {
+    private ItemStack getArmor(Material type, Color color) {
         ItemStack stack = new ItemStack(type);
         LeatherArmorMeta meta = (LeatherArmorMeta) stack.getItemMeta();
-        meta.setColor(ColorStringConverter.convertChatColor(color));
+        meta.setColor(color);
         meta.addEnchant(Enchantment.DURABILITY, 1, true);
         meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
         stack.setItemMeta(meta);
@@ -296,7 +297,7 @@ public class Villager {
 
     private ItemStack getItem(Material mat, int amount, byte b, HashMap<Enchantment, Integer> enchant,
                               String displayname) {
-        ItemStack stack = new ItemStack(mat, amount b);
+        ItemStack stack = new ItemStack(mat, amount, b);
         if (enchant != null) {
             for (Enchantment en : enchant.keySet()) {
                 stack.addUnsafeEnchantment(en, enchant.get(en));

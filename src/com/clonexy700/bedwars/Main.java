@@ -2,12 +2,12 @@ package com.clonexy700.bedwars;
 
 import com.clonexy700.bedwars.commands.BedWarsCommand;
 import com.clonexy700.bedwars.listener.*;
+import com.clonexy700.bedwars.utils.VillagerGUI;
 import com.clonexy700.bedwars.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ public class Main extends JavaPlugin {
     public StatsManager statsManager;
     public MySQL mySQL;
 
+    public static VillagerGUI villager;
+
     public List<ItemSpawner> itemSpawners = new ArrayList<>();
 
     @Override
@@ -28,6 +30,7 @@ public class Main extends JavaPlugin {
         initListener();
         initConfig();
         initWorlds();
+        villager = new VillagerGUI();
         GameState.setGameState(GameState.LOBBY);
         scoreboardUtil = new ScoreboardUtil(this);
         mySQL = new MySQL(this, getConfig().getString("mysql.username")
@@ -76,6 +79,7 @@ public class Main extends JavaPlugin {
         new JoinListener(this);
         new PlayerItemDropListener(this);
         new WeatherChangeListener(this);
+        new EntityInteractListener(this);
     }
 
     public void initWorlds() {
