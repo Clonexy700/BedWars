@@ -5,6 +5,7 @@ import com.clonexy700.bedwars.utils.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -23,7 +24,13 @@ public class EntityDamageListener implements Listener {
             if (e.getEntity() instanceof Player) {
                 if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
                     e.getEntity().teleport((Location) main.getConfig().get("location.lobby"));
-                } else {
+                }
+            }
+            e.setCancelled(true);
+        } else {
+            if (e.getEntity() instanceof Villager) {
+                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
+                        e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION ) {
                     e.setCancelled(true);
                 }
             }

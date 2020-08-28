@@ -5,15 +5,15 @@ import org.bukkit.Bukkit;
 
 public class LobbyCountdown {
 
-    static boolean isStarted = false;
+    public static boolean isStarted = false;
     static int count = 60;
-    static int sched;
+    public static int sched;
 
     public static void start(boolean force) {
         if (GameState.getGameState() != GameState.LOBBY) {
             return;
         }
-        if (force || Bukkit.getOnlinePlayers().size() == 2) {
+        if (force || Bukkit.getOnlinePlayers().size() == 4) {
             if (!isStarted) {
                 if (force) {
                     count = 5;

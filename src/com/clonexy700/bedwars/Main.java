@@ -68,7 +68,6 @@ public class Main extends JavaPlugin {
 
     public void initCommands() {
         new BedWarsCommand(this);
-        new StatsCommand(this);
     }
     public void initListener() {
         new BuildListener(this);
@@ -80,6 +79,7 @@ public class Main extends JavaPlugin {
         new PlayerItemDropListener(this);
         new WeatherChangeListener(this);
         new EntityInteractListener(this);
+        new PlayerDeathListener(this);
     }
 
     public void initWorlds() {

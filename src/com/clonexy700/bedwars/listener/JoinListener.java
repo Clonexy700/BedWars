@@ -1,9 +1,7 @@
 package com.clonexy700.bedwars.listener;
 
 import com.clonexy700.bedwars.Main;
-import com.clonexy700.bedwars.utils.GameState;
-import com.clonexy700.bedwars.utils.ItemBuilder;
-import com.clonexy700.bedwars.utils.LobbyCountdown;
+import com.clonexy700.bedwars.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -13,6 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scoreboard.Team;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class JoinListener implements Listener {
     private Main main;
@@ -22,9 +26,9 @@ public class JoinListener implements Listener {
     }
 
     public static void join(Main main, Player p) {
-        main.statsManager.setupPlayer(p, getUniqueId().toString());
+        main.statsManager.setupPlayer(Objects.requireNonNull(UUIDFetcher.getUniqueId(p.getName())).toString());
         try {
-            p.getPlayer().teleport((Location) main.getConfig().get("location.lobby"));
+            p.teleport(LocationUtil.get("location.lobby", main));
             p.getPlayer().setGameMode(GameMode.SURVIVAL);
             p.getPlayer().getInventory().clear();
             p.getPlayer().getInventory().getArmorContents();
@@ -38,7 +42,7 @@ public class JoinListener implements Listener {
 
             LobbyCountdown.start(false);
 
-            main.scoreboardUtil.setTeam(e.getPlayer().getName(), "001default");
+            main.scoreboardUtil.setTeam(p.getPlayer().getName(), "001default");
 
             p.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.BED).name("§6Team choose").build());
             p.getPlayer().getInventory().setItem(0, new ItemBuilder(Material.NETHER_STAR).name("§6Statistics").build());
@@ -53,6 +57,19 @@ public class JoinListener implements Listener {
         if (GameState.getGameState() == GameState.LOBBY) {
             e.setJoinMessage(main.prefix + "§d" + e.getPlayer().getName() + "§7Joined to the game");
             join(main, e.getPlayer());
+        }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        if (GameState.getGameState() == GameState.LOBBY) {
+            if (LobbyCountdown.isStarted) {
+                if (Bukkit.getOnlinePlayers().size() <= 4) {
+                    Bukkit.getScheduler().cancelTask(LobbyCountdown.sched);
+                }
+            }
+        } else {
+            GameManager.checkStop();
         }
     }
 }

@@ -50,7 +50,7 @@ public class ItemSpawner {
         this.type = type;
         Main.getPlugin(Main.class).itemSpawners.add(this);
     }
-
+    
     public void startSpawning() {
         sched = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(Main.class), new Runnable() {
             @Override

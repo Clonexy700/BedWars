@@ -17,9 +17,9 @@ import java.util.List;
 
 // What is ahegao? Is what a type of cheese?
 public class ScoreboardUtil {
-    private Main main;
+    private static Main main;
     public Scoreboard scoreboard;
-    public HashMap<String, Team> teams = new HashMap<>();
+    public static HashMap<String, Team> teams = new HashMap<>();
 
     public ScoreboardUtil(Main main) {
         this.main = main;
@@ -57,6 +57,15 @@ public class ScoreboardUtil {
         Bukkit.getOnlinePlayers().forEach(p -> p.setScoreboard(scoreboard));
     }
 
+    public Team getTeam(String playername) {
+        for (Team team : teams.values()) {
+            if (team.getEntries().contains(playername)) {
+                return team;
+            }
+        }
+        return null;
+    }
+
     Objective objective;
 
     public void showSidebar() {
@@ -77,13 +86,11 @@ public class ScoreboardUtil {
             List<Team> allteams = new ArrayList<>(teams.values());
             for (int i = 0; i<allteams.size(); i++) {
                 int size = allteams.get(i).getEntries().size();
-                if (size != 0) {
-                    objective.getScore("§a✓" + ChatColor.valueOf(
-                            main.getConfig().getString("location.spawn." + allteams.get(i).getDisplayName().substring(5) + ".color"))
+                if (size != 0 && GameManager.isBedAlive(Integer.parseInt(allteams.get(i).getDisplayName().substring(5)))) {
+                    objective.getScore("§a✓" + getColor(allteams.get(i).getDisplayName().substring(5))
                             + "Team #0" + allteams.get(i).getDisplayName().substring(5)).setScore(size);
                 } else {
-                    objective.getScore("§a❌" + ChatColor.valueOf(
-                            main.getConfig().getString("location.spawn." + allteams.get(i).getDisplayName().substring(5) + ".color"))
+                    objective.getScore("§a❌" + getColor(allteams.get(i).getDisplayName().substring(5))
                             + "Team #0" + allteams.get(i).getDisplayName().substring(5)).setScore(size);
                 }
             }
@@ -94,6 +101,12 @@ public class ScoreboardUtil {
 
     public Objective getObjective() {
         return objective;
+    }
+
+    public static ChatColor getColor(String i) {
+        List<Team> allteams = new ArrayList<>(teams.values());
+        return ChatColor.valueOf(
+                main.getConfig().getString("location.spawn." + i + ".color"));
     }
 
 }
