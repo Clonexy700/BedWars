@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class JoinListener implements Listener {
-    private Main main;
-    public JoinListener(Main main) {
-        this.main = main;
-        Bukkit.getPluginManager().registerEvents(this, main);
-    }
+    public class JoinListener implements Listener {
+        private Main main;
+        public JoinListener(Main main) {
+            this.main = main;
+            Bukkit.getPluginManager().registerEvents(this, main);
+        }
 
     public static void join(Main main, Player p) {
         main.statsManager.setupPlayer(Objects.requireNonNull(UUIDFetcher.getUniqueId(p.getName())).toString());
